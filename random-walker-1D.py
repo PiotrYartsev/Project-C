@@ -160,5 +160,10 @@ for n in range(50000):
     plot_number_of_steps.append(number_of_steps)
 
 plt.hist(plot_number_of_steps, bins=30)
-plt.show()
+plt.xlabel('Number of steps')
+plt.ylabel('Number of times')
+plt.title('Number of steps to get to 1 ball')
+#plt.show()
+plt.tight_layout()
+plt.savefig('random-walker-1D.png')
 
