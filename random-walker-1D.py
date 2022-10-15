@@ -72,9 +72,8 @@ def run_this_code(where_points):
 
         
                 
-        where_points=sorted(where_points)
-        where_points2=where_points.copy()
-        resulting_points.append(where_points2)
+
+        resulting_points.append(where_points[:])
         if len(where_points)==n:
             #print(where_points)
             pass
@@ -84,7 +83,7 @@ def run_this_code(where_points):
             
         number_of_steps+=1
     return resulting_points, number_of_steps, what_happened
-"""
+
 resulting_points,number_of_steps,what_happened=run_this_code(where_points)
 
 print(number_of_steps)
@@ -131,12 +130,13 @@ def run1(c):
     l2.set_data(what_happened[c][0],what_happened[c][1])
 
 #slow down the animation
-ani1 = animation.FuncAnimation(fig,run1,gen1,interval=100,blit=False,repeat=False)
-#ani2 = animation.FuncAnimation(fig,run2,gen2,interval=100,blit=False,repeat=False)
+ani1 = animation.FuncAnimation(fig,run1,gen1,interval=300,blit=False,repeat=False)
+
 plt.show()
 #save the ani1 and ani2 as a gif
 
-ani1.save('random-walker.gif', fps=3,writer='imagemagick')"""
+ani1.save('random-walker.gif', fps=30,writer='imagemagick')
+"""
 
 
 plot_number_of_steps=[]
@@ -165,5 +165,5 @@ plt.ylabel('Number of times')
 plt.title('Number of steps to get to 1 ball')
 #plt.show()
 plt.tight_layout()
-plt.savefig('random-walker-1D.png')
+plt.savefig('random-walker-1D.png')"""
 
