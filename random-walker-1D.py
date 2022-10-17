@@ -174,11 +174,11 @@ for n in tqdm(range(numberofsteps)):
     plot_number_of_steps.append(number_of_steps)
 
 
-plt.hist(plot_number_of_steps, bins=30,label="Number of steps: "+str(number_of_steps))
+plt.hist(plot_number_of_steps, bins=30,label="Number of iterations: "+str(numberofsteps))
 plt.legend()
 plt.xlabel('Number of steps')
 plt.ylabel('Number of times')
-plt.title('Number of steps to get to 1 ball\nwith {} line and starting at {} balls: 1D'.format(size,size,number_of_balls))
+plt.title('Number of steps to get to 1 ball\nwith {} line and starting at {} balls: 1D'.format(size,number_of_balls))
 #plt.show()
 plt.tight_layout()
 plt.savefig('plots/random-walker-2D-{}-{}.png'.format(size,number_of_balls))

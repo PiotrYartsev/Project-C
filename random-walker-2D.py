@@ -271,7 +271,7 @@ for n in tqdm(range(numberofsteps)):
     resulting_points,number_of_steps,what_happened=run_this_code(where_points)
     plot_number_of_steps.append(number_of_steps)
 
-plt.hist(plot_number_of_steps, bins=30,label="Number of steps: "+str(number_of_steps))
+plt.hist(plot_number_of_steps, bins=30,label="Number of iterations: "+str(numberofsteps))
 plt.legend()
 plt.xlabel('Number of steps')
 plt.ylabel('Number of times')
