@@ -244,7 +244,8 @@ ani1.save('random-walker-2D.gif', fps=3,writer='imagemagick')
 
 """
 plot_number_of_steps=[]
-for n in tqdm(range(500000)):
+numberofsteps=10000
+for n in tqdm(range(numberofsteps)):
     #make an array of 1000 zeros
     size=10
     number_of_balls=50
@@ -270,10 +271,11 @@ for n in tqdm(range(500000)):
     resulting_points,number_of_steps,what_happened=run_this_code(where_points)
     plot_number_of_steps.append(number_of_steps)
 
-plt.hist(plot_number_of_steps, bins=30)
+plt.hist(plot_number_of_steps, bins=30,label="Number of steps: "+str(number_of_steps))
+plt.legend()
 plt.xlabel('Number of steps')
 plt.ylabel('Number of times')
-plt.title('Number of steps to get to 1 ball: 2D')
+plt.title('Number of steps to get to 1 ball\nwith {}x{}grid and starting at {} balls: 2D'.format(size,size,number_of_balls))
 #plt.show()
 plt.tight_layout()
-plt.savefig('random-walker-2D.png')
+plt.savefig('plots/random-walker-2D-{}-{}.png'.format(size,number_of_balls))
