@@ -9,6 +9,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib import patches
 from sklearn.decomposition import randomized_svd
+from tqdm import tqdm
 
 #make an array of 1000 zeros
 size=10
@@ -168,12 +169,10 @@ def run_this_code(where_points):
         
         number_of_steps+=1
     return resulting_points, number_of_steps, what_happened
-
+"""
 resulting_points,number_of_steps,what_happened=run_this_code(where_points)
 print("This simulation took "+str(number_of_steps)+" steps")
 #print the values in the same list I appended to before
-
-print(len(resulting_points))
 
 
 second_resulting_points=[]
@@ -194,15 +193,13 @@ for i in range(len(resulting_points)):
 resulting_points=second_resulting_points
 
 
-
-
 import matplotlib.animation as animation
 import matplotlib.pyplot as plt
 import numpy as np
 
 fig, ax = plt.subplots()
 
-ax.set_title('Random Walker')
+ax.set_title('Random Walker: 2D')
 ax.set_xlabel('Position in x')
 ax.set_ylabel('Position in y')
 #Set size of plot
@@ -243,3 +240,40 @@ plt.show()
 #save the ani1 and ani2 as a gif
 
 ani1.save('random-walker-2D.gif', fps=3,writer='imagemagick')
+
+
+"""
+plot_number_of_steps=[]
+for n in tqdm(range(500000)):
+    #make an array of 1000 zeros
+    size=10
+    number_of_balls=50
+    #make 2d array
+    x1 = np.zeros((size,size))
+
+    #radnomly distribute 100 1s
+    p=0
+    while p < number_of_balls:
+        i=random.randint(0, size-1)
+        j=random.randint(0, size-1)
+        x1[i][j] = 1
+        p+=1
+
+
+    where_points=[]
+
+    for i in range(len(x1)):
+        for j in range(len(x1[i])):
+            if x1[i][j] == 1:
+                where_points.append([i,j])
+                
+    resulting_points,number_of_steps,what_happened=run_this_code(where_points)
+    plot_number_of_steps.append(number_of_steps)
+
+plt.hist(plot_number_of_steps, bins=30)
+plt.xlabel('Number of steps')
+plt.ylabel('Number of times')
+plt.title('Number of steps to get to 1 ball: 2D')
+#plt.show()
+plt.tight_layout()
+plt.savefig('random-walker-2D.png')

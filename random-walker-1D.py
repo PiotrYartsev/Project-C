@@ -2,11 +2,13 @@
 
 #make an array of 1000 zeros
 
-from operator import index
-from matplotlib import patches
-import numpy as np
-import matplotlib.pyplot as plt
 import random
+from operator import index
+
+import matplotlib.pyplot as plt
+import numpy as np
+from matplotlib import patches
+from tqdm import tqdm
 
 #make an array of 1000 zeros
 size=50
@@ -86,41 +88,36 @@ def run_this_code(where_points):
     return resulting_points, number_of_steps, what_happened
 
 resulting_points,number_of_steps,what_happened=run_this_code(where_points)
-
+"""
 print(number_of_steps)
+
+
+
+
+second_resulting_points=[]
+for i in range(len(resulting_points)):
+    newstuff=resulting_points[i][1:-1]
+    newstuff=newstuff.split(',')
+
+    newstuff=[int(i) for i in newstuff]
+    second_resulting_points.append(newstuff)
+
+
+resulting_points=second_resulting_points
+
 
 onec=[]
 for k in resulting_points:
     onec.append([1]*len(k))
 
-second_resulting_points=[]
-for i in range(len(resulting_points)):
-    newstuff=resulting_points[i][1:-1]
-    newstuff=newstuff.split("], [")
-    
-    newlist=[]
-    for j in range(len(newstuff)):
-        newstuff2=newstuff[j].replace("]","")
-        newstuff2=newstuff2.replace("[","")
-        newstuff2=newstuff2.split(", ")
-        newstuff2[0]=int(newstuff2[0])
-        newstuff2[1]=int(newstuff2[1])
-        newlist.append(newstuff2)
-    second_resulting_points.append(newlist)
-
-resulting_points=second_resulting_points
-#plot the array
-#plt.plot(x)
-#plt.show()
-
-
-import numpy as np
-import matplotlib.pyplot as plt
 import matplotlib.animation as animation
+import matplotlib.pyplot as plt
+import numpy as np
+
 fig, ax = plt.subplots()
 ax.set_xlim(-0.6, size+0.6)
 ax.set_ylim(0.4, 1.6)
-ax.set_title('Random Walker')
+ax.set_title('Random Walker: 1D' )
 ax.set_xlabel('Position')
 ax.set_ylabel('Occupied')
 #Set size of plot
@@ -151,12 +148,12 @@ ani1 = animation.FuncAnimation(fig,run1,gen1,interval=300,blit=False,repeat=Fals
 plt.show()
 #save the ani1 and ani2 as a gif
 
-ani1.save('random-walker.gif', fps=30,writer='imagemagick')
+ani1.save('random-walker-1D.gif', fps=30,writer='imagemagick')
+
+
 """
-
-
 plot_number_of_steps=[]
-for n in range(50000):
+for n in tqdm(range(500000)):
     size=50
     number_of_balls=20
     x = np.zeros(size)
@@ -178,8 +175,8 @@ for n in range(50000):
 plt.hist(plot_number_of_steps, bins=30)
 plt.xlabel('Number of steps')
 plt.ylabel('Number of times')
-plt.title('Number of steps to get to 1 ball')
+plt.title('Number of steps to get to 1 ball: 1D')
 #plt.show()
 plt.tight_layout()
-plt.savefig('random-walker-1D.png')"""
+plt.savefig('random-walker-1D.png')
 
