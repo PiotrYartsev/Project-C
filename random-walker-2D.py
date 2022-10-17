@@ -2,17 +2,17 @@
 
 #make an array of 1000 zeros
 
-from operator import index, le
-from matplotlib import patches
-import numpy as np
-import matplotlib.pyplot as plt
 import random
+from operator import index, le
 
+import matplotlib.pyplot as plt
+import numpy as np
+from matplotlib import patches
 from sklearn.decomposition import randomized_svd
 
 #make an array of 1000 zeros
 size=10
-number_of_balls=10
+number_of_balls=50
 #make 2d array
 x1 = np.zeros((size,size))
 
@@ -36,11 +36,12 @@ print(where_points)
 
 
 
+resulting_points2=[]
 
 what_happened=[]
 def run_this_code(where_points):
     n=number_of_balls
-    print(n)
+    #print(n)
     resulting_points=[]
     
     #shoose to move left or right
@@ -48,7 +49,7 @@ def run_this_code(where_points):
     while n > 1:
         
         i=random.choice(range(len(where_points)))
-        before=where_points[:]
+
         x=where_points[:][i][0]
         y=where_points[:][i][1]
         #print(x)
@@ -76,7 +77,7 @@ def run_this_code(where_points):
                     
 
                 else:
-                    what_happened.append([[0,0],-1])
+                    what_happened.append([[-10,-10],-1])
         
         #go to the right
         if randomvar < 2/4 and randomvar > 1/4:
@@ -97,7 +98,7 @@ def run_this_code(where_points):
     
 
                 else:
-                    what_happened.append([[0,0],-1])
+                    what_happened.append([[-10,-10],-1])
         
         #go up
         if randomvar < 3/4 and randomvar > 2/4:
@@ -120,7 +121,7 @@ def run_this_code(where_points):
                     
 
                 else:
-                    what_happened.append([[0,0],-1])
+                    what_happened.append([[-10,-10],-1])
         
         #go down
         if randomvar < 4/4 and randomvar > 3/4:
@@ -147,7 +148,7 @@ def run_this_code(where_points):
                     
 
                 else:
-                    what_happened.append([[0,0],-1])
+                    what_happened.append([[-10,-10],-1])
 
         
         
@@ -157,9 +158,11 @@ def run_this_code(where_points):
             pass
         else:    
             n=len(where_points)
-            print(n)
+            #print(n)
         #append the value of a list
-        resulting_points.append(where_points[:])
+        values=str(where_points)
+
+        resulting_points.append(values)
 
             
         
@@ -167,24 +170,43 @@ def run_this_code(where_points):
     return resulting_points, number_of_steps, what_happened
 
 resulting_points,number_of_steps,what_happened=run_this_code(where_points)
-print(number_of_steps)
+print("This simulation took "+str(number_of_steps)+" steps")
 #print the values in the same list I appended to before
 
+print(len(resulting_points))
+
+
+second_resulting_points=[]
+for i in range(len(resulting_points)):
+    newstuff=resulting_points[i][1:-1]
+    newstuff=newstuff.split("], [")
+    
+    newlist=[]
+    for j in range(len(newstuff)):
+        newstuff2=newstuff[j].replace("]","")
+        newstuff2=newstuff2.replace("[","")
+        newstuff2=newstuff2.split(", ")
+        newstuff2[0]=int(newstuff2[0])
+        newstuff2[1]=int(newstuff2[1])
+        newlist.append(newstuff2)
+    second_resulting_points.append(newlist)
+
+resulting_points=second_resulting_points
 
 
 
 
-
-import numpy as np
-import matplotlib.pyplot as plt
 import matplotlib.animation as animation
+import matplotlib.pyplot as plt
+import numpy as np
+
 fig, ax = plt.subplots()
 
 ax.set_title('Random Walker')
 ax.set_xlabel('Position in x')
 ax.set_ylabel('Position in y')
 #Set size of plot
-fig.set_size_inches(15, 2)
+fig.set_size_inches(15, 15)
 
 #set up lines seperating the bins
 for i in range(size+2):
@@ -205,7 +227,7 @@ def gen1():
 
 
 def run1(c):
-    print(c)
+    #print(c)
     x=[o[0] for o in resulting_points[c]]
     
     y=[o[1] for o in resulting_points[c]]
@@ -215,9 +237,9 @@ def run1(c):
 
 
 #slow down the animation
-ani1 = animation.FuncAnimation(fig,run1,gen1,interval=10,blit=False,repeat=False)
+ani1 = animation.FuncAnimation(fig,run1,gen1,interval=500,blit=False,repeat=False)
 #ani2 = animation.FuncAnimation(fig,run2,gen2,interval=100,blit=False,repeat=False)
 plt.show()
 #save the ani1 and ani2 as a gif
 
-#ani1.save('random-walker.gif', fps=3,writer='imagemagick')"""
+ani1.save('random-walker-2D.gif', fps=3,writer='imagemagick')

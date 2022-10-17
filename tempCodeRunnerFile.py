@@ -1,2 +1,2 @@
 
-#plot the array
+            n=len(where_points)

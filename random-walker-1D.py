@@ -72,8 +72,9 @@ def run_this_code(where_points):
 
         
                 
+        values=str(where_points)
 
-        resulting_points.append(where_points[:])
+        resulting_points.append(values)
         if len(where_points)==n:
             #print(where_points)
             pass
@@ -92,7 +93,22 @@ onec=[]
 for k in resulting_points:
     onec.append([1]*len(k))
 
+second_resulting_points=[]
+for i in range(len(resulting_points)):
+    newstuff=resulting_points[i][1:-1]
+    newstuff=newstuff.split("], [")
+    
+    newlist=[]
+    for j in range(len(newstuff)):
+        newstuff2=newstuff[j].replace("]","")
+        newstuff2=newstuff2.replace("[","")
+        newstuff2=newstuff2.split(", ")
+        newstuff2[0]=int(newstuff2[0])
+        newstuff2[1]=int(newstuff2[1])
+        newlist.append(newstuff2)
+    second_resulting_points.append(newlist)
 
+resulting_points=second_resulting_points
 #plot the array
 #plt.plot(x)
 #plt.show()
