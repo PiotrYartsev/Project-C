@@ -12,7 +12,7 @@ from sklearn.decomposition import randomized_svd
 from tqdm import tqdm
 
 #make an array of 1000 zeros
-size=10
+size=8
 number_of_balls=50
 #make 2d array
 x1 = np.zeros((size,size))
@@ -207,8 +207,13 @@ fig.set_size_inches(15, 15)
 
 #set up lines seperating the bins
 for i in range(size+2):
-    plt.axvline(i-0.5, color='k', linestyle='--', linewidth=1)
-    plt.axhline(i-0.5, color='k', linestyle='--', linewidth=1)
+    plt.plot([i-0.5,i-0.5],[0-0.5,size+1-0.5],color="black",linewidth=1,linestyle="--")
+    plt.plot([0-0.5,size+1-0.5],[i-0.5,i-0.5],color="black",linewidth=1,linestyle="--")
+plt.plot([-0.5,-0.5],[size+0.5,-0.5],color='r', linestyle='-', linewidth=1,label="Deadly border")
+plt.plot([size+0.5,-0.5],[size+0.5,size+0.5],color='r', linestyle='-', linewidth=1)
+plt.plot([size+0.5,size+0.5],[size+0.5,-0.5],color='r', linestyle='-', linewidth=1)
+plt.plot([size+0.5,-0.5],[-0.5,-0.5],color='r', linestyle='-', linewidth=1)
+
 
 
 # set up empty lines to be updates later on
@@ -234,12 +239,12 @@ def run1(c):
 
 
 #slow down the animation
-ani1 = animation.FuncAnimation(fig,run1,gen1,interval=500,blit=False,repeat=False)
+ani1 = animation.FuncAnimation(fig,run1,gen1,interval=300,blit=False,repeat=False)
 #ani2 = animation.FuncAnimation(fig,run2,gen2,interval=100,blit=False,repeat=False)
 plt.show()
 #save the ani1 and ani2 as a gif
 
-ani1.save('random-walker-2D.gif', fps=3,writer='imagemagick')
+ani1.save('plots/random-walker-2D.gif', fps=3,writer='imagemagick')
 
 
 """
@@ -248,7 +253,7 @@ numberofsteps=10000
 for n in tqdm(range(numberofsteps)):
     #make an array of 1000 zeros
     size=10
-    number_of_balls=50
+    number_of_balls=80
     #make 2d array
     x1 = np.zeros((size,size))
 
@@ -271,11 +276,15 @@ for n in tqdm(range(numberofsteps)):
     resulting_points,number_of_steps,what_happened=run_this_code(where_points)
     plot_number_of_steps.append(number_of_steps)
 
-plt.hist(plot_number_of_steps, bins=30,label="Number of iterations: "+str(numberofsteps))
+
+plt.hist(plot_number_of_steps, bins=30,label="Starting at {} balls".format(number_of_balls))
+
 plt.legend()
 plt.xlabel('Number of steps')
 plt.ylabel('Number of times')
-plt.title('Number of steps to get to 1 ball\nwith {}x{}grid and starting at {} balls: 2D'.format(size,size,number_of_balls))
+plt.title('Number of steps to get to 1 ball\nwith {}x{}grid: 2D'.format(size,size))
 #plt.show()
 plt.tight_layout()
 plt.savefig('plots/random-walker-2D-{}-{}.png'.format(size,number_of_balls))
+plt.close()
+

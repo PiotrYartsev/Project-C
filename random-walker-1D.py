@@ -88,7 +88,7 @@ def run_this_code(where_points):
     return resulting_points, number_of_steps, what_happened
 
 resulting_points,number_of_steps,what_happened=run_this_code(where_points)
-"""
+
 print(number_of_steps)
 
 
@@ -156,7 +156,7 @@ plot_number_of_steps=[]
 numberofsteps=10000
 for n in tqdm(range(numberofsteps)):
     size=50
-    number_of_balls=20
+    number_of_balls=40
     x = np.zeros(size)
 
     #radnomly distribute 100 1s
@@ -174,11 +174,11 @@ for n in tqdm(range(numberofsteps)):
     plot_number_of_steps.append(number_of_steps)
 
 
-plt.hist(plot_number_of_steps, bins=30,label="Number of iterations: "+str(numberofsteps))
+plt.hist(plot_number_of_steps, bins=30,label="Starting at {} balls".format(number_of_balls))
 plt.legend()
 plt.xlabel('Number of steps')
 plt.ylabel('Number of times')
 plt.title('Number of steps to get to 1 ball\nwith {} line and starting at {} balls: 1D'.format(size,number_of_balls))
 #plt.show()
 plt.tight_layout()
-plt.savefig('plots/random-walker-2D-{}-{}.png'.format(size,number_of_balls))
+plt.savefig('plots/random-walker-2D-{}-{}.png'.format(size,number_of_balls))"""

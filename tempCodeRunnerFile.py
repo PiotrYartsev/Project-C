@@ -1,1 +1,1 @@
-plt.hist(plot_number_of_steps, bins=30,label="Number of iterations: "+str(numberofsteps))
+e
