@@ -252,8 +252,8 @@ plot_number_of_steps=[]
 numberofsteps=10000
 for n in tqdm(range(numberofsteps)):
     #make an array of 1000 zeros
-    size=5
-    number_of_balls=int(size**2/2)
+    size=10
+    number_of_balls=80
     #make 2d array
     x1 = np.zeros((size,size))
 
@@ -276,15 +276,16 @@ for n in tqdm(range(numberofsteps)):
     resulting_points,number_of_steps,what_happened=run_this_code(where_points)
     plot_number_of_steps.append(number_of_steps)
 
-numberofbins=int(len(list(set(plot_number_of_steps))))
+numberofbins=len(list(set(plot_number_of_steps)))
+
 plt.hist(plot_number_of_steps, bins=numberofbins,label="Starting at {} balls".format(number_of_balls))
 
 plt.legend()
-plt.xlabel('Number of steps')
+plt.xlabel('Number of iterations')
 plt.ylabel('Number of times')
-plt.title('Number of steps to get to 1 ball\nfor 50% ocupied grid\nof size {}x{} in 2D'.format(size,size))
+plt.title('Number of iterations to get to 1 ball\nwith {}x{} grid in 2D'.format(size,size))
 #plt.show()
 plt.tight_layout()
-plt.savefig('plots/50-prox-at-{}-{}.png'.format(size,number_of_balls))
+plt.savefig('plots/random-walker-2D-{}-{}.png'.format(size,number_of_balls))
 plt.close()
 
