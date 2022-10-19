@@ -354,7 +354,7 @@ numberofsteps=10000
 for n in tqdm(range(numberofsteps)):
     #make an array of 1000 zeros
     size=10
-    number_of_balls=10
+    number_of_balls=80
     #make 2d array
     x1 = np.zeros((size,size))
 
@@ -393,18 +393,25 @@ for n in tqdm(range(numberofsteps)):
     number_of_steps=run_this_code(where_points_rock,where_points_paper,where_points_scissors,x1,limit)
     plot_number_of_steps_rock.append(number_of_steps)
     
-
-    
+even=[]
+odd=[]
+for stuff in plot_number_of_steps_rock:
+    if stuff//2==0:
+        even.append(stuff)
+    else:
+        odd.append(stuff)
 
 
 numberofbins=int(len(list(set(plot_number_of_steps_rock)))/2)
-plt.hist(plot_number_of_steps_rock,bins=numberofbins,color="blue",alpha=0.5,label="Starting with {} balls".format(number_of_balls))
+plt.hist(even,bins=1,color="b",label="Even number of iterations".format(number_of_balls))
+plt.hist(odd,bins=1,color="r",label="Odd number of iterations".format(number_of_balls))
+
 plt.legend(loc="upper right")
-plt.xlabel('Number of steps')
+plt.xlabel('Number of iterations')
 plt.ylabel('Number of times')
-plt.title('Number of steps to get to only one surviving group\nin a {}x{} grid starting at {} balls'.format(size,size,number_of_balls))
+plt.title('Even or odd number of iterations\nfor a {}x{} grid starting with {} balls'.format(size,size,number_of_balls))
 #plt.show()
 plt.tight_layout()
-plt.savefig('plots/rock-paper-scissors-{}-{}.png'.format(size,number_of_balls))
+plt.savefig('plots/rock-paper-scissors-even-odd.png'.format(size,number_of_balls))
 
 #"""
