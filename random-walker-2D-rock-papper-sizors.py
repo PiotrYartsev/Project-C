@@ -30,7 +30,9 @@ while p < number_of_balls:
     j=random.randint(0, size-1)
     x1[i][j] = 1
     p+=1
-
+#save the arrey as a image
+plt.imshow(x1, cmap='gray', interpolation='nearest')
+plt.savefig("starting.png")
 
 where_points_rock=[]
 where_points_paper=[]
@@ -57,10 +59,6 @@ print(where_points_scissors)
 
 
 resulting_points2=[]
-
-
-
-
 
 
 def choose_point_and_direction(list_to_choose_from):
