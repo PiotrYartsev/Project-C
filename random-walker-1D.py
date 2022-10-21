@@ -9,6 +9,7 @@ from certifi import where
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib import patches
+from pandas import array
 from tqdm import tqdm
 
 #make an array of 1000 zeros
@@ -52,9 +53,9 @@ def run_this_code(where_points):
                 if len(list(set(where_points)))!=len(where_points):
                     what_happened.append([where_points[-1],1])
                     #delete all examples of points that are the same
-                    print(len(where_points))    
+                   #print(len(where_points))    
                     where_points = [x for x in where_points if where_points.count(x) == 1]
-                    print(len(where_points))
+                   #print(len(where_points))
                     
                     
 
@@ -97,7 +98,7 @@ def run_this_code(where_points):
             
         number_of_steps+=1
     return resulting_points, number_of_steps, what_happened
-
+"""
 resulting_points,number_of_steps,what_happened=run_this_code(where_points)
 
 print(number_of_steps)
@@ -175,11 +176,16 @@ ani1.save('random-walker-1D.gif', fps=1,writer='imagemagick')
 
 
 """
+import numpy as np
+from scipy.optimize import curve_fit
+import matplotlib.pyplot as plt
 plot_number_of_steps=[]
-numberofsteps=10000
+x22=[]
+y=[]
+numberofsteps=1
 for n in tqdm(range(numberofsteps)):
-    size=50
-    number_of_balls=5
+    size=100000
+    number_of_balls=40000
     x = np.zeros(size)
 
     #radnomly distribute 100 1s
@@ -194,14 +200,33 @@ for n in tqdm(range(numberofsteps)):
 
     what_happened=[]
     resulting_points,number_of_steps,what_happened=run_this_code(where_points)
-    plot_number_of_steps.append(number_of_steps)
+    for i in range(len(resulting_points)):
+        y.append(i)
+        x22.append(len(resulting_points[i]))
 
-numberofbins=len(list(set(plot_number_of_steps)))
-plt.hist(plot_number_of_steps, bins=numberofbins,label="Starting at {} balls".format(number_of_balls))
+
+
+
+plt.plot(x22,y,'bo',label="Population at time t",markersize=1)
+plt.xlabel("Time t")
+plt.ylabel("Density of balls")
 plt.legend()
-plt.xlabel('Number of iterations')
-plt.ylabel('Number of times')
-plt.title('Number of iterations to get to 1 ball\nwith {} line and starting at {} balls: 1D'.format(size,number_of_balls))
-#plt.show()
-plt.tight_layout()
-plt.savefig('plots/random-walker-1D-{}-{}.png'.format(size,number_of_balls))"""
+x=array(x22)
+y=array(y)
+
+
+def func(x, a):
+    return a * x**(-1/2)
+
+popt, pcov = curve_fit(func, x, y)
+print(popt)
+print(pcov)
+plt.plot(x, func(x, *popt), 'r-',label="Fitted function")
+
+
+
+#set log scale
+plt.yscale('log')
+
+
+plt.show()

@@ -30,9 +30,7 @@ while p < number_of_balls:
     j=random.randint(0, size-1)
     x1[i][j] = 1
     p+=1
-#save the arrey as a image
-plt.imshow(x1, cmap='gray', interpolation='nearest')
-plt.savefig("starting.png")
+
 
 where_points_rock=[]
 where_points_paper=[]
@@ -59,6 +57,10 @@ print(where_points_scissors)
 
 
 resulting_points2=[]
+
+
+
+
 
 
 def choose_point_and_direction(list_to_choose_from):
@@ -406,4 +408,12 @@ plt.title('Number of iterations to get only one surviving group\nin a {}x{} grid
 plt.tight_layout()
 plt.savefig('plots/rock-paper-scissors-{}-{}.png'.format(size,number_of_balls))
 
+even=0
+odd=0
+for k in plot_number_of_steps_rock:
+    if k%2==0:
+        even+=1
+    else:
+        odd+=1
+print("Even: {} and Odd: {}".format(even,odd))
 #"""

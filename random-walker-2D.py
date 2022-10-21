@@ -169,7 +169,7 @@ def run_this_code(where_points):
         
         number_of_steps+=1
     return resulting_points, number_of_steps, what_happened
-
+"""
 resulting_points,number_of_steps,what_happened=run_this_code(where_points)
 print("This simulation took "+str(number_of_steps)+" steps")
 #print the values in the same list I appended to before
@@ -192,7 +192,7 @@ for i in range(len(resulting_points)):
 
 resulting_points=second_resulting_points
 
-
+""""""
 import matplotlib.animation as animation
 import matplotlib.pyplot as plt
 import numpy as np
@@ -260,7 +260,7 @@ numberofsteps=10000
 for n in tqdm(range(numberofsteps)):
     #make an array of 1000 zeros
     size=10
-    number_of_balls=80
+    number_of_balls=
     #make 2d array
     x1 = np.zeros((size,size))
 
@@ -296,4 +296,4 @@ plt.tight_layout()
 plt.savefig('plots/random-walker-2D-{}-{}.png'.format(size,number_of_balls))
 plt.close()
 
-#"""
+#
