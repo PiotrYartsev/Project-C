@@ -260,7 +260,7 @@ numberofsteps=10000
 for n in tqdm(range(numberofsteps)):
     #make an array of 1000 zeros
     size=10
-    number_of_balls=
+    number_of_balls=40
     #make 2d array
     x1 = np.zeros((size,size))
 

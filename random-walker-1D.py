@@ -184,8 +184,8 @@ x22=[]
 y=[]
 numberofsteps=1
 for n in tqdm(range(numberofsteps)):
-    size=100000
-    number_of_balls=40000
+    size=1000
+    number_of_balls=size*0.4
     x = np.zeros(size)
 
     #radnomly distribute 100 1s
