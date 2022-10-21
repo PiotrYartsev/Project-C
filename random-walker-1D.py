@@ -4,6 +4,7 @@
 
 import random
 from operator import index
+from certifi import where
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -40,15 +41,21 @@ def run_this_code(where_points):
         #if less then 0.5 go to the left
         if np.random.random() < 0.5:
             #if you cant go to the left die
-            if i-1 < 0:
+            if where_points[i]-1 < 0:
                 what_happened.append([where_points[i],1])
                 del where_points[i]
                 
             else:
-                where_points[i] -= 1
-                if where_points.count(where_points[i]) > 1:
-                    what_happened.append([where_points[i],1])
-                    where_points=list(filter(lambda a: a != where_points[i], where_points))
+                
+                where_points.append((where_points[i]-1))
+                del where_points[i]
+                if len(list(set(where_points)))!=len(where_points):
+                    what_happened.append([where_points[-1],1])
+                    #delete all examples of points that are the same
+                    print(len(where_points))    
+                    where_points = [x for x in where_points if where_points.count(x) == 1]
+                    print(len(where_points))
+                    
                     
 
                 else:
@@ -58,16 +65,20 @@ def run_this_code(where_points):
                 
         else:
             #if you cant go to the right die
-            if i+1 > size:
+            if where_points[i]+1 > size:
                 what_happened.append([where_points[i],1])
                 del where_points[i]
                 
             else:
-                where_points[i] += 1
-                if where_points.count(where_points[i]) > 1:
-                    what_happened.append([where_points[i],1])
-                    where_points=list(filter(lambda a: a != where_points[i], where_points))
+                
+                where_points.append((where_points[i]+1))
+                del where_points[i]
+                if len(list(set(where_points)))!=len(where_points):
+                    what_happened.append([where_points[-1]+1,1])
+
+                    where_points = [x for x in where_points if where_points.count(x) == 1]
                     
+
                 else:
                     what_happened.append([0,-1])
                     
@@ -86,7 +97,7 @@ def run_this_code(where_points):
             
         number_of_steps+=1
     return resulting_points, number_of_steps, what_happened
-"""
+
 resulting_points,number_of_steps,what_happened=run_this_code(where_points)
 
 print(number_of_steps)
@@ -120,17 +131,25 @@ ax.set_ylim(0.4, 1.6)
 ax.set_title('Random Walker: 1D' )
 ax.set_xlabel('Position')
 ax.set_ylabel('Occupied')
+#remove y axis
+ax.axes.get_yaxis().set_visible(False)
+
 #Set size of plot
 fig.set_size_inches(15, 2)
 
 #set up lines seperating the bins
 for i in range(size+2):
     plt.axvline(i-0.5, color='k', linestyle='--', linewidth=1)
+plt.axvline(-0.5, color='r', linestyle='-', linewidth=1, label='"kill" bondary')
+plt.axvline(size+0.5, color='r', linestyle='-', linewidth=1)
 
 
 # set up empty lines to be updates later on
-l1, = ax.plot([],[],'bo ')
+l1, = ax.plot([],[],'bo')
 l2, = ax.plot([],[],'ro')
+#write the number of balls each frame
+
+
 
 def gen1():
     i = 0
@@ -139,16 +158,20 @@ def gen1():
         i += 1
 
 def run1(c):
-    l1.set_data(resulting_points[c], onec[c])
+    l1.set_data(resulting_points[c], onec[c],)
     l2.set_data(what_happened[c][0],what_happened[c][1])
-
+    ax.set_title('Random Walker: 1D, Step: '+str(c))
+    l1.set_label('Number of balls: '+str(len(resulting_points[c])))
+    ax.legend(loc='upper right')
+    
+    
 #slow down the animation
-ani1 = animation.FuncAnimation(fig,run1,gen1,interval=300,blit=False,repeat=False)
+ani1 = animation.FuncAnimation(fig,run1,gen1,interval=450,blit=False,repeat=False)
 
 plt.show()
 #save the ani1 and ani2 as a gif
 
-ani1.save('random-walker-1D.gif', fps=30,writer='imagemagick')
+ani1.save('random-walker-1D.gif', fps=1,writer='imagemagick')
 
 
 """
@@ -181,4 +204,4 @@ plt.ylabel('Number of times')
 plt.title('Number of iterations to get to 1 ball\nwith {} line and starting at {} balls: 1D'.format(size,number_of_balls))
 #plt.show()
 plt.tight_layout()
-plt.savefig('plots/random-walker-1D-{}-{}.png'.format(size,number_of_balls))
+plt.savefig('plots/random-walker-1D-{}-{}.png'.format(size,number_of_balls))"""

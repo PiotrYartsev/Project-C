@@ -63,7 +63,7 @@ def run_this_code(where_points):
             #if you cant go to the left die
             if x-1 < 0:
                 #print("left die")
-                what_happened.append([where_points[i],1])
+                what_happened.append(where_points[i])
                 del where_points[i]
 
                 
@@ -73,18 +73,18 @@ def run_this_code(where_points):
 
                 if where_points.count(where_points[i]) > 1:
 
-                    what_happened.append([where_points[i],1])
+                    what_happened.append(where_points[i])
                     where_points=list(filter(lambda a: a != where_points[i], where_points[:]))
                     
 
                 else:
-                    what_happened.append([[-10,-10],-1])
+                    what_happened.append([-10,-10])
         
         #go to the right
         if randomvar < 2/4 and randomvar > 1/4:
             #if you cant go to the right die
             if x+1 > size:
-                what_happened.append([where_points[i],1])
+                what_happened.append(where_points[i])
                 del where_points[i]
 
                 
@@ -94,18 +94,18 @@ def run_this_code(where_points):
 
 
                 if where_points.count(where_points[i]) > 1:
-                    what_happened.append([where_points[i],1])
+                    what_happened.append(where_points[i])
                     where_points=list(filter(lambda a: a != where_points[i], where_points[:]))
     
 
                 else:
-                    what_happened.append([[-10,-10],-1])
+                    what_happened.append([-10,-10])
         
         #go up
         if randomvar < 3/4 and randomvar > 2/4:
             #if you cant go to the right die
             if y+1 > size:
-                what_happened.append([where_points[i],1])
+                what_happened.append(where_points[i])
                 del where_points[i]
 
                 
@@ -114,7 +114,7 @@ def run_this_code(where_points):
                 where_points[i][1] = where_points[:][i][1]+1
 
                 if where_points.count(where_points[i]) > 1:
-                    what_happened.append([where_points[i],1])
+                    what_happened.append(where_points[i])
 
                     where_points=list(filter(lambda a: a != where_points[i], where_points[:]))
 
@@ -122,13 +122,13 @@ def run_this_code(where_points):
                     
 
                 else:
-                    what_happened.append([[-10,-10],-1])
+                    what_happened.append([-10,-10])
         
         #go down
         if randomvar < 4/4 and randomvar > 3/4:
             #if you cant go to the right die
             if y-1 < 0:
-                what_happened.append([where_points[i],1])
+                what_happened.append(where_points[i])
                 del where_points[i]
 
                 
@@ -137,7 +137,7 @@ def run_this_code(where_points):
                 where_points[i][1] = where_points[:][i][1]-1
 
                 if where_points.count(where_points[i]) > 1:
-                    what_happened.append([where_points[i],1])
+                    what_happened.append(where_points[i])
                     #print(len(where_points))
                     where_points=list(filter(lambda a: a != where_points[i], where_points[:]))
                     #print(len(where_points))
@@ -149,7 +149,7 @@ def run_this_code(where_points):
                     
 
                 else:
-                    what_happened.append([[-10,-10],-1])
+                    what_happened.append([-10,-10])
 
         
         
@@ -169,7 +169,7 @@ def run_this_code(where_points):
         
         number_of_steps+=1
     return resulting_points, number_of_steps, what_happened
-"""
+
 resulting_points,number_of_steps,what_happened=run_this_code(where_points)
 print("This simulation took "+str(number_of_steps)+" steps")
 #print the values in the same list I appended to before
@@ -235,16 +235,23 @@ def run1(c):
     y=[o[1] for o in resulting_points[c]]
 
     l1.set_data(x,y)
-    #l2.set_data(what_happened[c][0],what_happened[c][1])
+    l2.set_data(what_happened[c][0],what_happened[c][1])
+    ax.set_title('Random Walker: 1D, Step: '+str(c))
+    l1.set_label('Number of balls: '+str(len(resulting_points[c])))
+    ax.legend(loc='upper right')
+    
 
 
 #slow down the animation
-ani1 = animation.FuncAnimation(fig,run1,gen1,interval=300,blit=False,repeat=False)
+ani1 = animation.FuncAnimation(fig,run1,gen1,interval=600,blit=False,repeat=False)
 #ani2 = animation.FuncAnimation(fig,run2,gen2,interval=100,blit=False,repeat=False)
 plt.show()
 #save the ani1 and ani2 as a gif
+writergif = animation.PillowWriter(fps=1) 
+ani1.save('random-walker-2D.gif',writer=writergif)
 
-ani1.save('plots/random-walker-2D.gif', fps=3,writer='imagemagick')
+
+
 
 
 """
@@ -289,3 +296,4 @@ plt.tight_layout()
 plt.savefig('plots/random-walker-2D-{}-{}.png'.format(size,number_of_balls))
 plt.close()
 
+#"""

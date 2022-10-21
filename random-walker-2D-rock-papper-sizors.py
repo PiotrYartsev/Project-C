@@ -18,8 +18,8 @@ from sympy import N
 from tqdm import tqdm
 
 #make an array of 1000 zeros
-size=6
-number_of_balls=20
+size=10
+number_of_balls=50
 #make 2d array
 x1 = np.zeros((size,size))
 
@@ -91,7 +91,7 @@ def moving_and_shecking(new_position,you,beatyou,youbeat,direction,size):
 
     #if the new position is not in the list of all points, delete the ball
     if new_position[0] < 0 or new_position[0] > size-1 or new_position[1] < 0 or new_position[1] > size-1:
-        return("delete")
+        return("dont move")
     #if it is a valid move sheck where it is moving
     else:
         #check if coinsides with itself
@@ -123,6 +123,7 @@ def moving_and_shecking(new_position,you,beatyou,youbeat,direction,size):
 newrock=[]
 newpaper=[]
 newscissors=[]
+what_happened=[]
 def run_this_code(where_points_rock,where_points_paper,where_points_scissors,all_points,limit):
 
     #shoose to move left or right
@@ -141,21 +142,26 @@ def run_this_code(where_points_rock,where_points_paper,where_points_scissors,all
             result =(moving_and_shecking(newpoint,where_points_rock,where_points_paper,where_points_scissors,direction,size))
             if result=="delete":
                 where_points_rock.remove(point)
+                what_happened.append(point)
             elif result=="dont move":
+                what_happened.append([-10,-10])
                 pass
             elif result=="die":
+                what_happened.append([-10,-10])
                 try:
                     where_points_rock.remove(point)
                     where_points_paper.append(newpoint)
                 except:
                     raise Exception("die",newpoint,where_points_paper)
             elif result=="win":
+                what_happened.append([-10,-10])
                 try:
                     where_points_rock.append(newpoint)
                     where_points_scissors.remove(newpoint)
                 except:
                     raise Exception("win",newpoint,where_points_scissors)
             elif result=="move":
+                what_happened.append([-10,-10])
                 try:
                     where_points_rock.remove(point)
                     where_points_rock.append(newpoint)
@@ -181,15 +187,19 @@ def run_this_code(where_points_rock,where_points_paper,where_points_scissors,all
             result =(moving_and_shecking(newpoint,where_points_paper,where_points_scissors,where_points_rock,direction,size))
             if result=="delete":
                 where_points_paper.remove(point)
+                what_happened.append(point)
             elif result=="dont move":
+                what_happened.append([-10,-10])
                 pass
             elif result=="die":
+                what_happened.append([-10,-10])
                 try:
                     where_points_paper.remove(point)
                     where_points_scissors.append(newpoint)
                 except:
                     raise Exception("die",newpoint,where_points_scissors)
             elif result=="win":
+                what_happened.append([-10,-10])
                 try:
                     where_points_paper.append(newpoint)
                     where_points_rock.remove(newpoint)
@@ -197,6 +207,7 @@ def run_this_code(where_points_rock,where_points_paper,where_points_scissors,all
                     raise Exception("win",newpoint,where_points_rock)
 
             elif result=="move":
+                what_happened.append([-10,-10])
                 try:
                     where_points_paper.remove(point)
                     where_points_paper.append(newpoint)
@@ -218,10 +229,13 @@ def run_this_code(where_points_rock,where_points_paper,where_points_scissors,all
             newpoint=[point[0]+direction[0],point[1]+direction[1]]
             result=(moving_and_shecking(newpoint,where_points_scissors,where_points_rock,where_points_paper,direction,size))
             if result=="delete":
+                what_happened.append(point)
                 where_points_scissors.remove(point)
             elif result=="dont move":
+                what_happened.append([-10,-10])
                 pass
             elif result=="die":
+                what_happened.append([-10,-10])
                 try:
                     where_points_scissors.remove(point)
                     where_points_rock.append(newpoint)
@@ -229,6 +243,7 @@ def run_this_code(where_points_rock,where_points_paper,where_points_scissors,all
                     raise Exception("die",newpoint,where_points_rock)
 
             elif result=="win":
+                what_happened.append([-10,-10])
                 try:
 
                     where_points_scissors.append(newpoint)
@@ -237,6 +252,7 @@ def run_this_code(where_points_rock,where_points_paper,where_points_scissors,all
                     raise Exception("win",newpoint,where_points_paper)
 
             elif result=="move":
+                what_happened.append([-10,-10])
                 try:
                     where_points_scissors.remove(point)
                     where_points_scissors.append(newpoint)
@@ -252,10 +268,11 @@ def run_this_code(where_points_rock,where_points_paper,where_points_scissors,all
     return(number_of_steps)
 
 
-"""
 
-run_this_code(where_points_rock,where_points_paper,where_points_scissors,x1)
-"""
+number_of_steps=run_this_code(where_points_rock,where_points_paper,where_points_scissors,x1,100)
+print(len(what_happened))
+
+print(number_of_steps)
 def str_to_list(resulting_points):
     second_resulting_points=[]
     for i in range(len(resulting_points)):
@@ -276,7 +293,7 @@ def str_to_list(resulting_points):
             second_resulting_points.append(newlist)
 
     return(second_resulting_points)
-"""
+
 newrock=str_to_list(newrock)
 newpaper=str_to_list(newpaper)
 newscissors=str_to_list(newscissors)
@@ -307,7 +324,8 @@ plt.plot([size+0.5,-0.5],[-0.5,-0.5],color='r', linestyle='-', linewidth=1)
 rock, = ax.plot([],[],'b*',label="Rock")
 paper, = ax.plot([],[],'r+',label="Paper")
 scissors, = ax.plot([],[],'go',label="scissors")
-
+l2, = ax.plot([],[],'ro')
+l1, = ax.plot([],[],'o',color="black")
 def gen1():
     i = 0
     while(i<len(newrock)):
@@ -331,28 +349,35 @@ def run1(c):
     x_s=[o[0] for o in newscissors[c]]
     y_s=[o[1] for o in newscissors[c]]
     scissors.set_data(x_s,y_s)
-
+    l2.set_data(what_happened[c][0],what_happened[c][1])
+    ax.set_title('Random Walker: 1D, Step: '+str(c))
+    rock.set_label('Number of rocks: '+str(len(newrock[c])))
+    paper.set_label('Number of papers: '+str(len(newpaper[c])))
+    scissors.set_label('Number of scissors: '+str(len(newscissors[c])))
+    l1.set_label('Total number of balls: '+str(len(newrock[c])+len(newpaper[c])+len(newscissors[c])))
+    ax.legend(loc='upper right')
 
     #l2.set_data(what_happened[c][0],what_happened[c][1])
 
-plt.legend(loc="upper left")
+
 #slow down the animation
-ani1 = animation.FuncAnimation(fig,run1,gen1,interval=400,blit=False,repeat=False)
+ani1 = animation.FuncAnimation(fig,run1,gen1,interval=600,blit=False,repeat=False)
 #ani2 = animation.FuncAnimation(fig,run2,gen2,interval=100,blit=False,repeat=False)
 plt.show()
 #save the ani1 and ani2 as a gif
-
-ani1.save('plots/rock-paper_scissors.gif', fps=3,writer='imagemagick')
+writergif = animation.PillowWriter(fps=1) 
+ani1.save('rock-paper_sizors.gif',writer=writergif)
 """
 
 plot_number_of_steps_rock=[]
 plot_number_of_steps_paper=[]
 plot_number_of_steps_scissors=[]
 numberofsteps=10000
+
 for n in tqdm(range(numberofsteps)):
     #make an array of 1000 zeros
-    size=10
-    number_of_balls=40
+    size=20
+    number_of_balls=size*size/2
     #make 2d array
     x1 = np.zeros((size,size))
 
@@ -392,7 +417,9 @@ for n in tqdm(range(numberofsteps)):
     plot_number_of_steps_rock.append(number_of_steps)
     
 
-
+#calculate the average number of steps
+average_number_of_steps_rock=sum(plot_number_of_steps_rock)/len(plot_number_of_steps_rock)
+print("The average number of steps for rock is",average_number_of_steps_rock)
 
 numberofbins=int(len(list(set(plot_number_of_steps_rock))))
 plt.hist(plot_number_of_steps_rock,bins=numberofbins,label="Starting with {} balls".format(number_of_balls))
